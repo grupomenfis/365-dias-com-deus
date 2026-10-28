@@ -1,61 +1,39 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>365 Dias com Deus</title>
-<link rel="stylesheet" href="style.css">
-<style>
-.share-verse{display:block;margin:18px auto 4px;padding:11px 22px;border:1px solid #87977d;border-radius:999px;background:transparent;color:#52694d;font:inherit;cursor:pointer}
-.share-verse:hover{background:#eef2e9}
-.share-feedback{text-align:center;font-size:.85rem;color:#52694d;min-height:1.2em;margin:5px 0}
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><title>365 Dias com Deus</title><link href="style.css" rel="stylesheet"/><style>
+.share-verse{display:block;margin:18px auto 4px;padding:11px 22px;border:1px solid #87977d;border-radius:999px;background:transparent;color:#52694d;font:inherit;cursor:pointer;transition:background .2s ease}
+.share-verse:hover,.share-verse:focus-visible{background:#eef2e9}
+.share-feedback{text-align:center;font-size:.85rem;color:#52694d;min-height:1.2em;margin:5px 0 0}
 .menfis-signature{text-align:center;margin:24px auto 14px;font-size:.83rem;letter-spacing:.03em;color:#788675}
-</style>
-</head>
-<body>
-<main class="shell">
-<header>
-<div class="signature"><span></span><p>365 DIAS COM DEUS</p><span></span></div>
-<h1>Uma palavra<br>para cada dia.</h1>
-<p class="intro">Abra o coração. Deus tem algo para você hoje.</p>
-</header>
-<section class="card">
-<p id="dateLabel" class="date"></p>
-<div class="rule"></div>
-<blockquote id="verse"></blockquote>
-<p id="ref" class="ref"></p>
-<a id="naaLink" class="naa-link" href="https://www.bible.com/pt/versions/1840-naa-nova-almeida-atualizada" target="_blank" rel="noopener noreferrer" aria-label="Ler esta passagem na tradução NAA na YouVersion">Ler na versão NAA ↗</a>
-<button id="shareVerse" class="share-verse" type="button">↗ Compartilhar versículo</button>
-<p id="shareFeedback" class="share-feedback" role="status" aria-live="polite"></p>
-<div class="rule"></div>
-<p class="blessing">Que esta palavra acompanhe o seu dia.</p>
-</section>
-<nav><button id="prev">←</button><button id="today">Hoje</button><button id="next">→</button></nav>
-<button id="choose" class="choose">Escolher outra data</button>
-<input id="picker" type="date" hidden>
-<footer>
-<p class="menfis-signature">Feito com fé e carinho · Grupo Menfis</p>
-<details><summary>Créditos</summary><p>Textos bíblicos: Bíblia Livre, edição de fevereiro de 2018, por Diego Santos, Mario Sérgio e Marco Teles. Licença Creative Commons Atribuição 3.0 Brasil (CC BY 3.0 BR). Fonte: sites.google.com/site/biblialivre. Adaptação: seleção de passagens e organização por data.</p></details>
-</footer>
-</main>
-<script src="versiculos.js"></script>
-<script src="script.js"></script>
-<script>
-(function(){
-const button=document.getElementById('shareVerse');
-const feedback=document.getElementById('shareFeedback');
-button.addEventListener('click',async function(){
-const verse=(document.getElementById('verse')?.innerText||'').trim();
-const reference=(document.getElementById('ref')?.innerText||'').trim();
-const date=(document.getElementById('dateLabel')?.innerText||'').trim();
-if(!verse){feedback.textContent='Aguarde o versículo carregar.';return;}
-const text=['🌿 365 Dias com Deus',date,'“'+verse+'”',reference,'Leia o versículo do dia: '+location.href.split('#')[0]].filter(Boolean).join('\n\n');
-feedback.textContent='';
-if(navigator.share){try{await navigator.share({title:'365 Dias com Deus',text});return;}catch(e){if(e.name==='AbortError')return;}}
-try{await navigator.clipboard.writeText(text);feedback.textContent='Versículo copiado! Cole no WhatsApp ou onde desejar.';}
-catch(e){window.open('https://api.whatsapp.com/send?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');feedback.textContent='Abrindo o WhatsApp.';}
-});
+
+/* Título ilustrado: identidade visual das canecas */
+.titulo-projeto{display:block;width:min(100%,440px);height:auto;margin:0 auto 14px;object-fit:contain;}
+@media(max-width:480px){.titulo-projeto{width:min(100%,340px);margin-bottom:12px;}}
+</style></head><body><main class="shell"><header><img alt="365 Dias com Deus" class="titulo-projeto" height="835" src="titulo_365_dias_com_deus.png" width="1036"/><h1>Uma palavra<br/>para cada dia.</h1><p class="intro">Abra o coração. Deus tem algo para você hoje.</p></header><section class="card"><p class="date" id="dateLabel"></p><div class="rule"></div><blockquote id="verse"></blockquote><p class="ref" id="ref"></p><a aria-label="Ler esta passagem na tradução NAA na YouVersion" class="naa-link" href="https://www.bible.com/pt/versions/1840-naa-nova-almeida-atualizada" id="naaLink" rel="noopener noreferrer" target="_blank">Ler na versão NAA ↗</a><button class="share-verse" id="shareVerse" type="button">↗ Compartilhar versículo</button><p aria-live="polite" class="share-feedback" id="shareFeedback" role="status"></p><div class="rule"></div><p class="blessing">Que esta palavra acompanhe o seu dia.</p></section><nav><button id="prev">←</button><button id="today">Hoje</button><button id="next">→</button></nav><button class="choose" id="choose">Escolher outra data</button><input hidden="" id="picker" type="date"/><footer><p class="menfis-signature">Feito com fé e carinho · Grupo Menfis</p><details><summary>Créditos</summary><p>Textos bíblicos: Bíblia Livre, edição de fevereiro de 2018, por Diego Santos, Mario Sérgio e Marco Teles. Licença Creative Commons Atribuição 3.0 Brasil (CC BY 3.0 BR). Fonte: sites.google.com/site/biblialivre. Adaptação: seleção de passagens e organização por data.</p></details></footer></main><script src="versiculos.js"></script><script src="script.js"></script><script>
+(function () {
+  const shareButton = document.getElementById('shareVerse');
+  const feedback = document.getElementById('shareFeedback');
+  if (!shareButton) return;
+  shareButton.addEventListener('click', async function () {
+    const verse = (document.getElementById('verse')?.innerText || '').trim();
+    const reference = (document.getElementById('ref')?.innerText || '').trim();
+    const date = (document.getElementById('dateLabel')?.innerText || '').trim();
+    if (!verse) { feedback.textContent = 'Aguarde o versículo carregar para compartilhar.'; return; }
+    const text = ['🌿 365 Dias com Deus', date, '“' + verse + '”', reference, 'Leia o versículo do dia: ' + window.location.href.split('#')[0]].filter(Boolean).join('\n\n');
+    feedback.textContent = '';
+    if (navigator.share) {
+      try { await navigator.share({ title: '365 Dias com Deus', text: text }); return; }
+      catch (error) { if (error.name === 'AbortError') return; }
+    }
+    // Fallback: copiar a mensagem, inclusive em navegadores sem compartilhamento nativo.
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error('clipboard indisponível');
+      await navigator.clipboard.writeText(text);
+      feedback.textContent = 'Versículo copiado! Agora é só colar no WhatsApp ou onde desejar.';
+    } catch (error) {
+      const whatsapp = 'https://api.whatsapp.com/send?text=' + encodeURIComponent(text);
+      window.open(whatsapp, '_blank', 'noopener,noreferrer');
+      feedback.textContent = 'Abrindo o WhatsApp para compartilhar.';
+    }
+  });
 })();
-</script>
-</body>
-</html>
+</script></body></html>
